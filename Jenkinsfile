@@ -8,10 +8,6 @@ pipeline {
                 disableConcurrentBuilds() 
                 ansiColor('xterm')
             }
-    environment {
-     // def AppVersion = ''
-     // nexusURL = 'nexus.chandradevops.online:8081'
-    }
     parameters {
         string(name: 'AppVersion', defaultValue: '1.0.0', description: 'App version')
     }
