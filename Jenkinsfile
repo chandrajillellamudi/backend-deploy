@@ -18,9 +18,7 @@ pipeline {
     stages {
         stage ('read the version') {
             steps {
-                script {
-                echo "Application Version: $AppVersion"
-            }
+                sh 'echo "Application Version: $AppVersion"'
             }
         }
     }
