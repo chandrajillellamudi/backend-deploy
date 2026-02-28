@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage ('read the version') {
             steps {
-                sh 'echo Application Version:${params.AppVersion}'
+                sh "echo Application Version:${params.AppVersion}"
             }
         }
     }
