@@ -39,14 +39,14 @@ pipeline {
                 """
             }
         }
-        // stage ('apply') {
-        //     steps {
-        //         sh """
-        //         cd terraform
-        //         terraform apply -var="AppVersion=${params.AppVersion}" -auto-approve
-        //         """
-        //     }
-        // }
+        stage ('apply') {
+            steps {
+                sh """
+                cd terraform
+                terraform apply -var="AppVersion=${params.AppVersion}" -auto-approve
+                """
+            }
+        }
     }
      post { 
         always { 
