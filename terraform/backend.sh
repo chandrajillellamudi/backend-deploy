@@ -1,6 +1,7 @@
 #!/bin/bash
 component=$1
-AppVersion=$2
+environment=$2
+AppVersion=$3
 dnf install ansible -y
 pip3 install botocore boto3
 

@@ -17,30 +17,30 @@ module "backend" {
 }
 
 
-resource "null_resource" "backend" {
-    triggers = {
-      instance_id = module.backend.id # this will be triggered everytime instance is created
-    }
+  resource "null_resource" "backend" {
+      triggers = {
+        instance_id = module.backend.id # this will be triggered everytime instance is created
+      }
 
-    connection {
-        type     = "ssh"
-        user     = "ec2-user"
-        password = "DevOps321"
-        host     = module.backend.private_ip
-    }
+      connection {
+          type     = "ssh"
+          user     = "ec2-user"
+          password = "DevOps321"
+          host     = module.backend.private_ip
+      }
 
-    provisioner "file" {
-        source      = "${var.common_tags.Component}.sh"
-        destination = "/tmp/${var.common_tags.Component}.sh"
-    }
+      provisioner "file" {
+          source      = "${var.common_tags.Component}.sh"
+          destination = "/tmp/${var.common_tags.Component}.sh"
+      }
 
-    provisioner "remote-exec" {
-        inline = [
-            "chmod +x /tmp/${var.common_tags.Component}.sh",
-            "sudo sh /tmp/${var.common_tags.Component}.sh ${var.common_tags.Component} ${var.environment} ${var.AppVersion}"
-        ]
-    } 
-}
+      provisioner "remote-exec" {
+          inline = [
+              "chmod +x /tmp/${var.common_tags.Component}.sh",
+              "sudo sh /tmp/${var.common_tags.Component}.sh ${var.common_tags.Component} ${var.environment} ${var.AppVersion}"
+          ]
+      } 
+  }
 
 resource "aws_ec2_instance_state" "backend" {
   instance_id = module.backend.id
