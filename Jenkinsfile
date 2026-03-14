@@ -10,9 +10,12 @@ pipeline {
             }
     parameters {
         string(name: 'AppVersion', defaultValue: '1.0.0', description: 'App version')
+        choice(name: 'Action', choices: ['apply', 'destroy'], description: 'Terraform action')
+
     }
      environment{
         def appVersion = '' //variable declaration
+        // APP_VERSION = "${params.AppVersion}"
         nexusUrl = 'nexus.chandradevops.online:8081'
     }
     stages {
@@ -31,6 +34,9 @@ pipeline {
             }
         }
         stage ('plan') {
+             when {
+                expression { return params.Action == 'apply' }
+            }
             steps {
                 sh """
                 pwd
@@ -40,10 +46,24 @@ pipeline {
             }
         }
         stage ('apply') {
+             when {
+                expression { return params.Action == 'apply' }
+            }
             steps {
                 sh """
                 cd terraform
                 terraform apply -var="AppVersion=${params.AppVersion}" -auto-approve
+                """
+            }
+        }
+        stage ('destroy') {
+             when {
+                expression { return params.Action == 'destroy' }
+            }
+            steps {
+                sh """
+                cd terraform
+                terraform destroy -var="AppVersion=${params.AppVersion}" -auto-approve
                 """
             }
         }
