@@ -25,9 +25,6 @@ pipeline {
             }
         }
         stage ('init') {
-             when {
-                expression { return params.Action == 'apply' }
-            }
             steps {
                 sh """
                 pwd
